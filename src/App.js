@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {createStore} from 'redux';
+import GroceryList from './GroceryList';
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          <GroceryList />
         </a>
       </header>
     </div>
