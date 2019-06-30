@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import {addItemToGroceryList } from './actions'
 
 class GroceryList extends React.Component {
 
@@ -12,7 +14,8 @@ class GroceryList extends React.Component {
 
     addToList = (event) => {
         event.preventDefault();
-        this.setState({groceries: [...this.state.groceries, this.state.item]})
+        // this.setState({groceries: [...this.state.groceries, this.state.item]})
+        this.state.addItemToGroceryList(this.state.item)
         console.log("groceries: ", this.state.groceries)
     }
 
@@ -22,6 +25,7 @@ class GroceryList extends React.Component {
     }
 
     render(){
+
         return (
             <div className="container">
                 <div className="row">
@@ -47,16 +51,24 @@ class GroceryList extends React.Component {
                                 <li>{item}</li>
                                 )
                             }
-        
                         </ul>
-                          
                     </div>
                 </div>
-
             </div>
         )
         
     }
 }
 
-export default GroceryList;
+const mapStateToProps = (state) => {
+    return { groceries: state.groceries };
+}
+
+const mapDispatchToProps = { addItemToGroceryList }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GroceryList)
+
+// export default GroceryList;

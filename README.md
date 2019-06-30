@@ -22,3 +22,6 @@ Add a new item to my grocery list. The item should have a name/description and o
 Indicate an item has been purchased.
 Set filters for purchased/not purchased/all, categories/all.
 Set sort by name/description.
+
+
+See reducers for question

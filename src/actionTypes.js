@@ -1,3 +1,2 @@
-export const CREATE_ITEM = 'CREATE_ITEM';
-export const DELETE_ITEM = 'DELETE_ITEM';
-export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const ADD_ITEM_TO_LIST = 'ADD_ITEM_TO_LIST';
+export const REMOVE_ITEM_TO_LIST = 'REMOVE_ITEM_TO_LIST';
