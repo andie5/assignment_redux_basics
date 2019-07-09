@@ -15,7 +15,7 @@ class GroceryList extends React.Component {
     addToList = (event) => {
         event.preventDefault();
         // this.setState({groceries: [...this.state.groceries, this.state.item]})
-        this.state.addItemToGroceryList(this.state.item)
+        this.props.addItemToGroceryList(this.state.item)
         console.log("groceries: ", this.state.groceries)
     }
 
@@ -47,7 +47,7 @@ class GroceryList extends React.Component {
                     <div className="col">
                         <h3>Grocery List</h3>
                         <ul>
-                            {this.state.groceries.map((item) =>
+                            {this.props.grocerieslist.map((item) =>
                                 <li>{item}</li>
                                 )
                             }
@@ -61,7 +61,7 @@ class GroceryList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { groceries: state.groceries };
+    return { grocerieslist: state.groceries }; // this.props.grocerieslist
 }
 
 const mapDispatchToProps = { addItemToGroceryList }

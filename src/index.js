@@ -6,9 +6,10 @@ import { createStore } from 'redux'
 import App from './App';
 import { reducers } from './reducers';
 import * as serviceWorker from './serviceWorker';
+//import { composeWithDevTools } from 'redux-devtools-extension';
 
 // Create our store
-let store = createStore(reducers)
+let store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 const rootElement = document.getElementById('root')
 
