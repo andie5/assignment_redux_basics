@@ -30,8 +30,11 @@ class GroceryList extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <form onSubmit={this.addToList}>
-                            <label>Enter grocery item</label><br />
+                        <form className="container" onSubmit={this.addToList}>
+                            <h1>
+                                Add A Grocery{" "}
+                            </h1>
+                            {/* <label>Enter grocery item</label><br /> */}
                             <input type="text"
                                 placeholder="Enter grocery item"
                                 name="groceryitem"
@@ -42,7 +45,6 @@ class GroceryList extends React.Component {
                             <p></p>
                             <button>Add to List</button>
                         </form>
-                        {/* <button>Add to grocery list</button><br /> */}
                     </div>
                     <div className="col">
                         <h3>Grocery List</h3>
