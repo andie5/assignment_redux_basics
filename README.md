@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This assignment is created for [Viking Code School](https://www.vikingcodeschool.com/)
+Original project idea from [Viking Code School](https://www.vikingcodeschool.com/)
 
 ## Available Scripts
 
