@@ -2,12 +2,32 @@
 import { combineReducers } from 'redux';
 import {ADD_ITEM_TO_LIST, REMOVE_ITEM_TO_LIST} from './actionTypes'
 
+// Reducer to as a single text item to an arry or remove it
+// const groceryList = (state = [], action) => {
+//     switch(action.type){
+//         case ADD_ITEM_TO_LIST:
+//             return [...state , action.payload];
+//         case REMOVE_ITEM_TO_LIST:
+//             return state.filter((item,i)=>i!==action.payload)
+//         default:
+//             return state;
+//     }
+// };
+
 const groceryList = (state = [], action) => {
     switch(action.type){
         case ADD_ITEM_TO_LIST:
-            return [...state , action.payload];
+            return [...state , 
+                {
+                    id: action.id,
+                    item: action.item,
+                    description: action.description,
+                    category: action.category,
+                    purchased: action.purchased
+                }
+            ];
         case REMOVE_ITEM_TO_LIST:
-            return state.filter((item,i)=>i!==action.payload)
+            return state.filter((item,i)=>i!==action.payload.id)
         default:
             return state;
     }

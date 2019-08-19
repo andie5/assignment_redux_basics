@@ -6,7 +6,7 @@ import * as actionTypes from './actionTypes'
 export const addItemToGroceryList = (data) => {
     return {  
         type: actionTypes.ADD_ITEM_TO_LIST,
-        payload: data,
+        payload: data.id,
     }
 }
 
