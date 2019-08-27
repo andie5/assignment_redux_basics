@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {addItemToGroceryList, removeItemToGroceryList } from './actions'
+import {addItemToGroceryList, removeItemToGroceryList, updateDescriptionOfItem } from './actions'
 
 class GroceryList extends React.Component {
 
@@ -14,6 +14,7 @@ class GroceryList extends React.Component {
         }
         this.groceryitem = React.createRef();
         this.description = React.createRef();
+        this.updatedDescription = React.createRef();
     };
 
     createGroceryItem = () => {
@@ -56,6 +57,15 @@ class GroceryList extends React.Component {
 
          this.props.removeItemToGroceryList(event.target.value)
     }
+
+    updateItem = (event) => {
+        // Prevent the page reloading each time this function is called
+       //  event.preventDefault();
+        console.log("event.target.value ",event.target.value)
+        console.log("event.target ", event.target)
+
+        this.props.updateDescriptionOfItem(event.target.value)
+   }
 
     // Captures the input change
     handleChange = (event) => {
@@ -128,6 +138,28 @@ class GroceryList extends React.Component {
                         </select>
                         {/* <button onSubmit={this.removeItem}>Delete item</button> */}
                     </div>
+                    <div className="col">
+                        <h3>Update an item from grocery list</h3>
+                        <form className="container" onSubmit={this.updateItem}>
+                    
+                            <select name ="groceryList"
+                                // onChange={this.updateItem} 
+                                >
+                                {this.props.groceries.map((item) => {
+
+                                    return <option key={item.id} value={item.name}>{item.name}</option>
+                                })
+                                }
+                            </select>
+                            <input type="text"
+                                    placeholder="Enter new description"
+                                    name="description"
+                                    ref={this.updatedDescription}
+                                >
+                                </input>
+                            <button>Update description</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         )
@@ -139,7 +171,7 @@ const mapStateToProps = (state) => {
     return { groceries: state.groceries }; // this.props.grocerieslist
 }
 
-const mapDispatchToProps = { addItemToGroceryList, removeItemToGroceryList }
+const mapDispatchToProps = { addItemToGroceryList, removeItemToGroceryList, updateDescriptionOfItem }
 
 export default connect(
   mapStateToProps,

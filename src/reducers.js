@@ -1,6 +1,6 @@
 
 import { combineReducers } from 'redux';
-import {ADD_ITEM_TO_LIST, REMOVE_ITEM_FROM_LIST} from './actionTypes'
+import {ADD_ITEM_TO_LIST, REMOVE_ITEM_FROM_LIST, UPDATE_ITEM_IN_LIST} from './actionTypes'
 
 // Reducer to as a single text item to an array or remove it
 
@@ -10,8 +10,33 @@ const groceries = (state = [], action) => {
         case ADD_ITEM_TO_LIST:
             return [...state , action.payload];
         case REMOVE_ITEM_FROM_LIST:
-            console.log("item reducer: ", action)
-            return state.filter((item) => item.id!==action.id)
+            console.log("action.payload: ", action.payload)
+            
+            // Find the whole item to delete in the collection
+            const groceryItemObj = state.find(item => item.name === action.payload);
+
+            // Delete the item using the id
+            // wjy was passing the id not enough and the whole object from the selection had to be retrieved
+            // return state.filter((item) => item.id!==action.id)
+            return state.filter((item) => item.id!==groceryItemObj.id)
+
+        case UPDATE_ITEM_IN_LIST:
+            console.log("update item: ", action)
+
+            // Find the whole item to delete in the collection
+            let groceryItemToUpdate = state.find(item => item.name === action);
+
+            console.log("groceryItemToUpdate: ", groceryItemToUpdate)
+        
+                return state.map(item => {
+                    if (item.id !== groceryItemToUpdate.id){
+                        return item
+                    }
+                    else{
+                        // Spread object but not as an array is this okay
+                        return {...item, description: action.description}
+                    }
+                })
         default:
             return state;
     }
