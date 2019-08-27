@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {addItemToGroceryList } from './actions'
+import {addItemToGroceryList, removeItemToGroceryList } from './actions'
 
 class GroceryList extends React.Component {
 
@@ -8,11 +8,17 @@ class GroceryList extends React.Component {
         super(props);
         this.state = {
             // groceries : [],
-            item: '', 
-            description: '',
+            // item: '', 
+            // description: '',
             id: 0
         }
+        this.groceryitem = React.createRef();
+        this.description = React.createRef();
     };
+
+    createGroceryItem = () => {
+
+    }
 
     addToList = (event) => {
         // Prevent the page reloading each time this function is called
@@ -21,23 +27,34 @@ class GroceryList extends React.Component {
         // If we were storing the list in local this.state, do the following
         // this.setState({groceries: [...this.state.groceries, this.state.item]})
 
-        // Create and object from each shopping list item
-        const newItem = {
-            id: this.state.id,
-            item: this.state.item,
-            description: this.state.description,
-            category: this.state.category,
-            purchased: true
-        }
-        console.log("newItem: ", newItem)
-
-
+        // Temporary until the id is added to redux
         this.setState({id: this.state.id + 1})
 
+        console.log("this.state.id: ", this.state.id)
+
+        // Create an object from each shopping list item
+        // Create utility function for the creating new item
+        const newItem = {
+            id: this.state.id,
+            name: this.groceryitem.current.value,
+            description: this.description.current.value,
+            // category: this.state.category,
+            purchased: true
+        }
+        console.log("this.groceryitem: ", this.groceryitem.current.value)
+        console.log("newItem: ", newItem)
+
         // Redux state
-        // this.props.addItemToGroceryList(this.state.item)
         this.props.addItemToGroceryList(newItem)
-        // console.log("groceries: ", this.state.groceries)
+    }
+
+    removeItem = (event) => {
+         // Prevent the page reloading each time this function is called
+        //  event.preventDefault();
+         console.log("event.target.value ",event.target.value)
+         console.log("event.target ", event.target)
+
+         this.props.removeItemToGroceryList(event.target.value)
     }
 
     // Captures the input change
@@ -63,30 +80,26 @@ class GroceryList extends React.Component {
                             <h1>
                                 Add A Grocery
                             </h1>
-                            {/* <label>Enter grocery item</label><br /> */}
                             <input type="text"
                                 placeholder="Enter grocery item"
                                 name="groceryitem"
-                                value={this.state.item}
-                                onChange={this.handleChange}
+                                ref={this.groceryitem}
                             >
                             </input><br />
                             <input type="text"
                                 placeholder="Enter description"
                                 name="description"
-                                value={this.state.description}
-                                onChange={this.handleDescriptionChange}
+                                ref={this.description}
                             >
                             </input>
                             <br />
                             <select name ="category" 
-                            onChange={this.handleDropdownChange}
+                             onChange={this.handleDropdownChange}
                             >
                                 <option value = "Food & Drink" defaultValue>Food & Drink</option>
                                 <option value = "Clothing">Clothing</option>
                                 <option value = "Toiletories">Toiletories</option>
                             </select>
-
                             <p></p>
                             <button>Add to List</button>
                         </form>
@@ -94,13 +107,26 @@ class GroceryList extends React.Component {
                     <div className="col">
                         <h3>Grocery List</h3>
                         <ul>
-                            {this.props.grocerieslist.map((item) => {
+                            {this.props.groceries.map((item) => {
 
                                    return <li key={item.id}>{item.name}</li>
                                     
                                 })
                             }
                         </ul>
+                    </div>
+                    <div className="col">
+                    <h3>Remove an item from grocery list</h3>
+                        <select name ="groceryList"
+                            onChange={this.removeItem} 
+                            >
+                            {this.props.groceries.map((item) => {
+
+                                return <option key={item.id} value={item.name}>{item.name}</option>
+                             })
+                            }
+                        </select>
+                        {/* <button onSubmit={this.removeItem}>Delete item</button> */}
                     </div>
                 </div>
             </div>
@@ -110,10 +136,10 @@ class GroceryList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { grocerieslist: state.groceries }; // this.props.grocerieslist
+    return { groceries: state.groceries }; // this.props.grocerieslist
 }
 
-const mapDispatchToProps = { addItemToGroceryList }
+const mapDispatchToProps = { addItemToGroceryList, removeItemToGroceryList }
 
 export default connect(
   mapStateToProps,

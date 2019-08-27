@@ -1,37 +1,22 @@
 
 import { combineReducers } from 'redux';
-import {ADD_ITEM_TO_LIST, REMOVE_ITEM_TO_LIST} from './actionTypes'
+import {ADD_ITEM_TO_LIST, REMOVE_ITEM_FROM_LIST} from './actionTypes'
 
-// Reducer to as a single text item to an arry or remove it
-// const groceryList = (state = [], action) => {
-//     switch(action.type){
-//         case ADD_ITEM_TO_LIST:
-//             return [...state , action.payload];
-//         case REMOVE_ITEM_TO_LIST:
-//             return state.filter((item,i)=>i!==action.payload)
-//         default:
-//             return state;
-//     }
-// };
+// Reducer to as a single text item to an array or remove it
 
-const groceryList = (state = [], action) => {
+// why d we need to initialise state each time in the parameters
+const groceries = (state = [], action) => {
     switch(action.type){
         case ADD_ITEM_TO_LIST:
-            return [...state , 
-                {
-                    id: action.id,
-                    item: action.item,
-                    description: action.description,
-                    category: action.category,
-                    purchased: action.purchased
-                }
-            ];
-        case REMOVE_ITEM_TO_LIST:
-            return state.filter((item,i)=>i!==action.payload.id)
+            return [...state , action.payload];
+        case REMOVE_ITEM_FROM_LIST:
+            console.log("item reducer: ", action)
+            return state.filter((item) => item.id!==action.id)
         default:
             return state;
     }
 };
+
 
 // const peopleInitialState = [
 //     {
@@ -60,6 +45,6 @@ const groceryList = (state = [], action) => {
 // }
 
 export const reducers = combineReducers({
-  groceries: groceryList,
+  groceries,
 }); 
 
