@@ -9,7 +9,8 @@ class GroceryList extends React.Component {
         this.state = {
             // groceries : [],
             // item: '', 
-            // description: '',
+            // updatedDescription: '',
+            idToUpdate: 0,
             id: 0
         }
         this.groceryitem = React.createRef();
@@ -17,9 +18,6 @@ class GroceryList extends React.Component {
         this.updatedDescription = React.createRef();
     };
 
-    createGroceryItem = () => {
-
-    }
 
     addToList = (event) => {
         // Prevent the page reloading each time this function is called
@@ -30,8 +28,6 @@ class GroceryList extends React.Component {
 
         // Temporary until the id is added to redux
         this.setState({id: this.state.id + 1})
-
-        console.log("this.state.id: ", this.state.id)
 
         // Create an object from each shopping list item
         // Create utility function for the creating new item
@@ -53,32 +49,30 @@ class GroceryList extends React.Component {
          // Prevent the page reloading each time this function is called
         //  event.preventDefault();
          console.log("event.target.value ",event.target.value)
-         console.log("event.target ", event.target)
-
          this.props.removeItemToGroceryList(event.target.value)
     }
 
     updateItem = (event) => {
         // Prevent the page reloading each time this function is called
-       //  event.preventDefault();
-        console.log("event.target.value ",event.target.value)
-        console.log("event.target ", event.target)
+        event.preventDefault();
 
-        this.props.updateDescriptionOfItem(event.target.value)
+        console.log("event.target.value ", event.target.value)
+        console.log("this.state.idToUpdate to send to action creator ", this.state.idToUpdate)
+        console.log("this.updatedDescription.current.value ", this.updatedDescription.current.value)
+        console.log("this.updatedDescription ", this.updatedDescription)
+        
+
+        // this.props.updateDescriptionOfItem(event.target.value, this.state.idToUpdate)
+        this.props.updateDescriptionOfItem(this.state.idToUpdate, this.updatedDescription.current.value)
    }
 
-    // Captures the input change
-    handleChange = (event) => {
-        this.setState({item: event.target.value})
+   handleDescriptionChange = (event) => {
+    this.setState({idToUpdate: event.target.value})
+    console.log("this.state.idToUpdate: ", this.state.idToUpdate)
     }
-
-    handleDescriptionChange = (event) => {
-        this.setState({description: event.target.value})
-    }
-
-    handleDropdownChange = (event) => {
-        this.setState({category: event.target.value})
-    }
+//    handleDropdownChange = (event) => {
+//     this.setState({category: event.target.value})
+//    }
 
     render(){
 
@@ -136,19 +130,20 @@ class GroceryList extends React.Component {
                              })
                             }
                         </select>
-                        {/* <button onSubmit={this.removeItem}>Delete item</button> */}
+                        {/* Use onclick if I want to use local state or use redux to store the text that the user is entering */}
+                        {/* <button onClick={this.removeItem}>Delete item</button> */}
                     </div>
+                    {/* Using select have to use onchange rather than onSubmit with uncontrolled components */}
                     <div className="col">
                         <h3>Update an item from grocery list</h3>
-                        <form className="container" onSubmit={this.updateItem}>
-                    
-                            <select name ="groceryList"
-                                // onChange={this.updateItem} 
-                                >
-                                {this.props.groceries.map((item) => {
-
-                                    return <option key={item.id} value={item.name}>{item.name}</option>
-                                })
+                        <form className="container" 
+                            onSubmit={this.updateItem}
+                        >
+                            <select name ="groceryList" onChange={this.handleDescriptionChange}>
+                                {
+                                    this.props.groceries.map((item) => {
+                                        return <option key={item.id} value={item.id}>{item.name}</option>
+                                    })
                                 }
                             </select>
                             <input type="text"
@@ -156,7 +151,7 @@ class GroceryList extends React.Component {
                                     name="description"
                                     ref={this.updatedDescription}
                                 >
-                                </input>
+                            </input>
                             <button>Update description</button>
                         </form>
                     </div>

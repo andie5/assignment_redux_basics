@@ -11,17 +11,18 @@ export const addItemToGroceryList = (data) => {
 }
 
 // Action creator to remove an item from the list
-export const removeItemToGroceryList = (data) => {
+export const removeItemToGroceryList = (id) => {
     return {  
         type: actionTypes.REMOVE_ITEM_FROM_LIST,
-        payload: data,
+        payload: id,
     }
 }
 
 // Action creator to update an item in the list
-export const updateDescriptionOfItem = (item) => {
+export const updateDescriptionOfItem = (id, newDescription) => {
+    console.log("newDescription in action: ", newDescription, "id is ", id)
     return {  
         type: actionTypes.UPDATE_ITEM_IN_LIST,
-        item,
+        payload: {id, newDescription}
     }
 }

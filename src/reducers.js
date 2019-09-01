@@ -21,20 +21,22 @@ const groceries = (state = [], action) => {
             return state.filter((item) => item.id!==groceryItemObj.id)
 
         case UPDATE_ITEM_IN_LIST:
-            console.log("update item: ", action)
 
+            console.log("action.payload: ", action.payload)
             // Find the whole item to delete in the collection
-            let groceryItemToUpdate = state.find(item => item.name === action);
+            // let groceryItemToUpdate = state.find(item => item.name === action);
 
-            console.log("groceryItemToUpdate: ", groceryItemToUpdate)
+            // console.log("groceryItemToUpdate: ", groceryItemToUpdate)
         
                 return state.map(item => {
-                    if (item.id !== groceryItemToUpdate.id){
-                        return item
+                    console.log("item.id is: ", item.id, " and action.id is: ", action.payload.id)
+                    debugger
+                    if (item.id === parseInt(action.payload.id)){
+                        console.log("found match: ")
+                        return {...item, description: action.payload.newDescription}
                     }
                     else{
-                        // Spread object but not as an array is this okay
-                        return {...item, description: action.description}
+                        return item
                     }
                 })
         default:
