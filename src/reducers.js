@@ -30,12 +30,12 @@ const groceries = (state = [], action) => {
         
                 return state.map(item => {
                     console.log("item.id is: ", item.id, " and action.id is: ", action.payload.id)
-                    debugger
                     if (item.id === parseInt(action.payload.id)){
                         console.log("found match: ")
+                        console.log("item to update: " ,{...item, description: action.payload.newDescription})
                         return {...item, description: action.payload.newDescription}
                     }
-                    else{
+                    else {
                         return item
                     }
                 })

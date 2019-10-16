@@ -48,7 +48,6 @@ class GroceryList extends React.Component {
     removeItem = (event) => {
          // Prevent the page reloading each time this function is called
         //  event.preventDefault();
-         console.log("event.target.value ",event.target.value)
          this.props.removeItemToGroceryList(event.target.value)
     }
 
@@ -57,13 +56,13 @@ class GroceryList extends React.Component {
         event.preventDefault();
 
         console.log("event.target.value ", event.target.value)
-        console.log("this.state.idToUpdate to send to action creator ", this.state.idToUpdate)
         console.log("this.updatedDescription.current.value ", this.updatedDescription.current.value)
         console.log("this.updatedDescription ", this.updatedDescription)
         
 
         // this.props.updateDescriptionOfItem(event.target.value, this.state.idToUpdate)
         this.props.updateDescriptionOfItem(this.state.idToUpdate, this.updatedDescription.current.value)
+        console.log("updated desc: ", this.props.groceries)
    }
 
    handleDescriptionChange = (event) => {
@@ -75,7 +74,7 @@ class GroceryList extends React.Component {
 //    }
 
     render(){
-
+console.log("groceries in main: ", this.props.groceries)
         return (
             <div className="container">
                 <div className="row">
@@ -158,7 +157,6 @@ class GroceryList extends React.Component {
                 </div>
             </div>
         )
-        
     }
 }
 
