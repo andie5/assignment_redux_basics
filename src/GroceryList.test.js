@@ -10,6 +10,8 @@ import { ADD_ITEM_TO_LIST } from "./actionTypes";
 // Investigte why store.getState does not work with this module or find alternative
 // Use example in github repo using real store
 
+// Keep writing new reducers and tests
+
 const mockStore = configureStore();
 const store = mockStore();
 
